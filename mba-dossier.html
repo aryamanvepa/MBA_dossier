@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MBA Application Dossier</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root{
+  --paper:#F5F0E3;
+  --paper-alt:#EDE6D3;
+  --card:#FBF8F0;
+  --ink:#1C2A47;
+  --ink-soft:#4A5673;
+  --brass:#9C6B30;
+  --brass-soft:#C99A5B;
+  --oxblood:#8C3230;
+  --sage:#5B7A5E;
+  --line:#DCD2B6;
+  --line-soft:#E7DFC7;
+  --shadow: 0 1px 2px rgba(28,42,71,.06), 0 4px 14px rgba(28,42,71,.05);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Inter',system-ui,sans-serif;
+  line-height:1.5;
+  background-image:
+    linear-gradient(var(--paper) 0%, var(--paper) 100%);
+}
+.wrap{max-width:960px;margin:0 auto;padding:36px 22px 90px;}
+
+/* ---------- header ---------- */
+header.masthead{
+  border-bottom:2px solid var(--ink);
+  padding-bottom:20px;
+  margin-bottom:26px;
+  position:relative;
+}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--brass);
+  margin-bottom:6px;
+}
+h1.title{
+  font-family:'Fraunces',serif;
+  font-weight:600;
+  font-size:clamp(28px,4.2vw,42px);
+  margin:0 0 6px 0;
+  letter-spacing:-.01em;
+}
+.subtitle{
+  color:var(--ink-soft);
+  font-size:14.5px;
+  max-width:640px;
+}
+.school-chips{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;}
+.chip{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  padding:4px 10px;
+  border:1px solid var(--line);
+  border-radius:100px;
+  color:var(--ink-soft);
+  background:var(--card);
+}
+
+/* next deadline banner */
+.next-deadline{
+  margin-top:20px;
+  background:var(--ink);
+  color:var(--paper);
+  border-radius:6px;
+  padding:14px 18px;
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:14px;
+  flex-wrap:wrap;
+}
+.next-deadline .label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--brass-soft);}
+.next-deadline .main{font-family:'Fraunces',serif;font-size:19px;margin-top:2px;}
+.next-deadline .days{font-family:'IBM Plex Mono',monospace;font-size:26px;color:#fff;}
+.next-deadline .days span{font-size:12px;color:var(--brass-soft);display:block;font-family:'Inter';margin-top:2px;}
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;gap:2px;margin:30px 0 22px;border-bottom:1px solid var(--line);}
+.tab-btn{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12.5px;
+  letter-spacing:.04em;
+  background:none;border:none;
+  padding:10px 4px;margin-right:22px;
+  color:var(--ink-soft);
+  cursor:pointer;
+  border-bottom:2px solid transparent;
+  transform:translateY(1px);
+}
+.tab-btn.active{color:var(--ink);border-bottom-color:var(--oxblood);font-weight:600;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* ---------- timeline ---------- */
+.month-group{margin-bottom:8px;}
+.month-label{
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-size:15px;
+  color:var(--brass);
+  margin:26px 0 8px;
+  padding-bottom:4px;
+  border-bottom:1px dashed var(--line);
+}
+.tl-row{
+  display:grid;
+  grid-template-columns:78px 1fr auto;
+  gap:14px;
+  align-items:center;
+  padding:11px 4px;
+  border-bottom:1px solid var(--line-soft);
+}
+.tl-row.past{opacity:.42;}
+.tl-date{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12.5px;
+  color:var(--ink-soft);
+  white-space:nowrap;
+}
+.tl-main{min-width:0;}
+.tl-school{font-weight:600;font-size:14px;}
+.tl-round{font-size:12.5px;color:var(--ink-soft);}
+.tl-intake{
+  display:inline-block;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  color:var(--brass);
+  border:1px solid var(--brass-soft);
+  border-radius:3px;
+  padding:1px 5px;
+  margin-left:7px;
+  vertical-align:2px;
+}
+.tl-days{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11.5px;
+  text-align:right;
+  min-width:76px;
+  padding:3px 8px;
+  border-radius:4px;
+  white-space:nowrap;
+}
+.tl-days.urgent{background:#F3E0DE;color:var(--oxblood);font-weight:600;}
+.tl-days.soon{background:#F1E7D0;color:var(--brass);font-weight:600;}
+.tl-days.later{color:var(--ink-soft);}
+.tl-days.gone{color:#B4AC94;}
+
+.timeline-note{
+  font-size:12.5px;color:var(--ink-soft);
+  background:var(--paper-alt);
+  border-left:3px solid var(--brass-soft);
+  padding:10px 14px;border-radius:0 4px 4px 0;
+  margin-bottom:14px;
+}
+
+/* ---------- school cards ---------- */
+.school-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:8px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.school-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 20px;cursor:pointer;
+  gap:10px;
+}
+.school-head:hover{background:var(--paper-alt);}
+.school-head h2{
+  font-family:'Fraunces',serif;font-weight:600;
+  font-size:20px;margin:0;
+}
+.school-head .meta{font-size:12px;color:var(--ink-soft);margin-top:3px;}
+.chevron{font-family:'IBM Plex Mono',monospace;color:var(--brass);font-size:14px;transition:transform .15s;}
+.school-card.open .chevron{transform:rotate(90deg);}
+.school-body{display:none;padding:0 20px 22px;border-top:1px solid var(--line-soft);}
+.school-card.open .school-body{display:block;}
+
+.section-label{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--brass);margin:20px 0 10px;
+}
+.intake-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:6px;}
+.intake-table th{
+  text-align:left;font-family:'IBM Plex Mono',monospace;font-weight:500;
+  font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;
+  color:var(--ink-soft);padding:6px 8px;border-bottom:1px solid var(--line);
+}
+.intake-table td{padding:7px 8px;border-bottom:1px solid var(--line-soft);}
+.intake-table tr.past td{opacity:.4;}
+.intake-table td.rd{font-weight:600;}
+.intake-table td.dt{font-family:'IBM Plex Mono',monospace;}
+.intake-block-title{font-weight:600;font-size:14px;margin:16px 0 6px;color:var(--ink);}
+.small-note{font-size:11.5px;color:var(--ink-soft);font-style:italic;margin:2px 0 14px;}
+
+/* essay cards */
+.profile-card{
+  background:var(--card);border:1px solid var(--line);border-radius:8px;
+  padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow);
+}
+.profile-card h2{font-family:'Fraunces',serif;font-weight:600;font-size:20px;margin:0 0 4px;}
+.profile-stats{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 14px;}
+.pstat{
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-soft);
+  background:var(--paper-alt);border:1px solid var(--line);border-radius:4px;
+  padding:4px 8px;
+}
+.profile-section{margin-bottom:12px;}
+.profile-section .ps-label{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--brass);margin-bottom:4px;
+}
+.profile-section p{margin:0;font-size:13.5px;color:var(--ink);}
+.fit-line{
+  margin-top:14px;padding:10px 12px;background:var(--paper-alt);
+  border-left:3px solid var(--brass-soft);border-radius:0 4px 4px 0;
+  font-size:13px;color:var(--ink-soft);
+}
+.essay{
+  border:1px solid var(--line);
+  border-radius:6px;
+  margin-bottom:12px;
+  background:#FEFCF6;
+}
+.essay.essay-schol{border-color:var(--brass-soft);}
+.schol-badge{
+  font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.06em;
+  background:var(--brass);color:#fff;border-radius:3px;padding:2px 5px;
+  vertical-align:1px;margin-right:4px;
+}
+.essay-head{
+  display:flex;justify-content:space-between;gap:10px;
+  padding:11px 14px;align-items:flex-start;
+  background:var(--paper-alt);
+  border-bottom:1px solid var(--line-soft);
+  border-radius:6px 6px 0 0;
+}
+.essay-title{font-weight:600;font-size:13.5px;}
+.essay-limit{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--brass);white-space:nowrap;}
+.essay-prompt{padding:10px 14px 4px;font-size:13px;color:var(--ink-soft);}
+.essay-editor-wrap{padding:8px 14px 14px;}
+textarea.essay-box{
+  width:100%;min-height:120px;resize:vertical;
+  font-family:'Inter',sans-serif;font-size:13.5px;line-height:1.55;
+  border:1px solid var(--line);border-radius:5px;
+  padding:10px 12px;background:#fff;color:var(--ink);
+}
+textarea.essay-box:focus{outline:none;border-color:var(--brass-soft);}
+.essay-footer{display:flex;justify-content:space-between;align-items:center;margin-top:6px;}
+.wordcount{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);}
+.wordcount.over{color:var(--oxblood);font-weight:600;}
+.status-select{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;
+  border:1px solid var(--line);border-radius:4px;padding:3px 6px;
+  background:#fff;color:var(--ink-soft);
+}
+.save-indicator{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--sage);opacity:0;transition:opacity .3s;}
+.save-indicator.show{opacity:1;}
+
+textarea.scratch-box{
+  width:100%;min-height:220px;resize:vertical;
+  font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.6;
+  border:1px solid var(--line);border-radius:6px;
+  padding:14px;background:#FEFCF6;color:var(--ink);
+}
+.scratch-block{margin-bottom:26px;}
+.scratch-title{font-family:'Fraunces',serif;font-weight:600;font-size:17px;margin-bottom:4px;}
+.scratch-hint{font-size:12px;color:var(--ink-soft);margin-bottom:8px;}
+
+footer.foot{
+  margin-top:50px;padding-top:16px;border-top:1px solid var(--line);
+  font-size:11.5px;color:var(--ink-soft);
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">Application Cycle — 2026 / 2027</div>
+    <h1 class="title">MBA Application Dossier</h1>
+    <div class="subtitle">Deadlines, essay banks, and a running draft workspace for the January and September intakes across your six target schools. Drafts autosave to this browser.</div>
+    <div class="school-chips" id="chipRow"></div>
+    <div class="next-deadline" id="nextDeadline"></div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="timeline">Timeline</button>
+    <button class="tab-btn" data-tab="schools">Schools &amp; Essays</button>
+    <button class="tab-btn" data-tab="profiles">School Profiles</button>
+    <button class="tab-btn" data-tab="notes">Rough Work</button>
+  </div>
+
+  <div class="tab-panel active" id="panel-timeline">
+    <div class="timeline-note">Every application round for both intakes, merged chronologically. Greyed rows have already closed. Verify exact times against each school's portal — most close at 11:59pm in the school's local timezone.</div>
+    <div id="timelineList"></div>
+  </div>
+
+  <div class="tab-panel" id="panel-schools">
+    <div id="schoolList"></div>
+  </div>
+
+  <div class="tab-panel" id="panel-profiles">
+    <div class="timeline-note">Written by synthesizing patterns across GMAT Club reviews/forums, r/MBA and similar Reddit threads, Poets&amp;Quants school coverage, and Clear Admit school pages — not official school material. These are characterizations of recurring themes in applicant and student discussion, not verified facts about any individual's chances; forum sentiment also drifts year to year, so treat this as a starting orientation and sanity-check anything decision-relevant against a current thread.</div>
+    <div id="profileList"></div>
+  </div>
+
+  <div class="tab-panel" id="panel-notes">
+    <div class="scratch-block">
+      <div class="scratch-title">General scratchpad</div>
+      <div class="scratch-hint">Unstructured space — narrative threads, recurring themes across schools, things to reuse, half-formed ideas. Not tied to any single essay.</div>
+      <textarea class="scratch-box" id="generalScratch" placeholder="Dump anything here — story fragments, the KRAMA / AI-adoption narrative angle, GMAT talking points, recommender notes..."></textarea>
+      <div class="essay-footer"><span class="wordcount" id="wc-general"></span><span class="save-indicator" id="save-general">saved</span></div>
+    </div>
+    <div id="schoolScratchList"></div>
+  </div>
+
+  <footer class="foot">
+    Deadlines compiled Aug 2026 from official admissions pages (INSEAD, HEC Paris) and current-cycle aggregators for Oxford Saïd, Cambridge Judge, IMD and LBS. Schools revise rounds and essay wording between cycles — re-check the live portal before you submit. LBS has not yet published exact 2027-intake round dates (opens late Aug 2026); the pattern shown is historical.
+  </footer>
+</div>
+
+<script>
+const TODAY = new Date();
+
+const SCHOOLS = [
+{
+  id:'insead', name:'INSEAD', tag:'INSEAD',
+  meta:'10-month MBA · Fontainebleau / Singapore · two intakes/year',
+  portal:'https://www.insead.edu/master-programmes/master-business-administration/admissions',
+  intakes:[
+    { label:'January 2027', rounds:[
+      {round:'Round 1', deadline:'2026-03-17', decision:'2026-05-15'},
+      {round:'Round 2', deadline:'2026-04-21', decision:'2026-06-26'},
+      {round:'Round 3', deadline:'2026-06-30', decision:'2026-08-28'},
+      {round:'Round 4', deadline:'2026-08-25', decision:'2026-10-09', note:'Apply by 4 Aug for financial-services/internship timelines'},
+    ]},
+    { label:'August/September 2027', rounds:[
+      {round:'Round 1', deadline:'2026-09-15', decision:'2026-11-20'},
+      {round:'Round 2', deadline:'2026-11-03', decision:'2027-01-22'},
+      {round:'Round 3', deadline:'2027-01-19', decision:'2027-03-19'},
+      {round:'Round 4', deadline:'2027-03-09', decision:'2027-05-07'},
+    ]},
+  ],
+  essays:[
+    {id:'jd1', title:'Job Description — Career summary', limit:'500 words', prompt:'Provide a summary of your career since graduating from university, explaining the rationale behind your key decisions and career progression. Include a description of your current (or most recent) role, covering scope of work, major responsibilities, employees under your supervision, budget size, clients/products, and any notable results achieved.'},
+    {id:'jd2', title:'Job Description — Career aspirations', limit:'300 words', prompt:'Describe your short and long-term career aspirations, including your target geography, industry, and function. How do you plan to bridge the gap between your current position and these goals, and how will INSEAD help you achieve them?'},
+    {id:'m1', title:'Motivation Essay 1 — Yourself as a leader', limit:'500 words', prompt:'Give a candid description of yourself as a person and a leader, emphasising the strengths and weaknesses you recognise in yourself. Explain how you are actively working on your development, sharing key experiences that have shaped you, providing specific examples where relevant.'},
+    {id:'m2', title:'Motivation Essay 2 — Stressful situation', limit:'400 words', prompt:'Describe a highly stressful situation you faced and how you managed it. What did this experience teach you about yourself and your interactions with others?'},
+    {id:'m3', title:'Motivation Essay 3 — Anything else', limit:'300 words', prompt:'Is there anything else that was not covered in your application that you would like to share with the Admissions Committee?'},
+    {id:'act', title:'Activities & Interests (bonus/optional field)', limit:'300 words', prompt:'Describe the activities you listed in your application and explain how they have enriched your life (e.g. skills developed, personal growth, community impact).'},
+  ],
+  scholarshipNote:"No separate scholarship essay found. INSEAD's need-based, merit-based and \"spot\" scholarships (roughly €20,000–€50,000, 150+ funds across both campuses) are assessed automatically from the main application — there's no extra form for the general pool. Company-sponsored candidates are discouraged from applying since funds are aimed at those with fewer resources. Worth double-checking the portal directly in case a specific named/regional scholarship you're eligible for has since added its own statement."
+},
+{
+  id:'hec', name:'HEC Paris', tag:'HEC',
+  meta:'12–16-month MBA · Jouy-en-Josas · rolling rounds, two intakes/year',
+  portal:'https://www.hec.edu/en/mba-executive-mba/mba/admissions/application-deadlines',
+  intakes:[
+    { label:'January 2027', rounds:[
+      {round:'Round', deadline:'2026-08-16', decision:'2026-09-18'},
+      {round:'Round', deadline:'2026-09-20', decision:'2026-10-23'},
+      {round:'Round', deadline:'2026-10-18', decision:'2026-11-20'},
+      {round:'Round (final)', deadline:'2026-11-15', decision:'2026-12-18'},
+    ]},
+    { label:'September 2027', rounds:[
+      {round:'Round', deadline:'2026-08-16', decision:'2026-09-18'},
+      {round:'Round', deadline:'2026-09-20', decision:'2026-10-23'},
+      {round:'Round', deadline:'2026-10-18', decision:'2026-11-20'},
+      {round:'Round', deadline:'2026-11-15', decision:'2026-12-18'},
+      {round:'Round', deadline:'2027-01-11', decision:'2027-02-19'},
+      {round:'Round', deadline:'2027-02-15', decision:'2027-03-19'},
+      {round:'Round', deadline:'2027-03-15', decision:'2027-04-16'},
+      {round:'Round', deadline:'2027-04-12', decision:'2027-05-21'},
+      {round:'Round', deadline:'2027-05-17', decision:'2027-06-18'},
+      {round:'Round (final)', deadline:'2027-06-14', decision:'2027-07-16'},
+    ]},
+  ],
+  essays:[
+    {id:'e1', title:'Essay 1 — Why HEC, why now', limit:'~500 words', prompt:'Why are you applying to the HEC MBA Program now? What is the professional objective that will guide your career choice after your MBA, and how will the HEC MBA contribute to the achievement of this objective?'},
+    {id:'e2', title:'Essay 2 — Significant achievement', limit:'250 words', prompt:'What do you consider your most significant life achievement?'},
+    {id:'e3', title:'Essay 3 — Leadership & ethics', limit:'250 words', prompt:'Leadership and ethics are inevitably intertwined in the business world. Describe a situation in which you have dealt with these issues and how they have influenced you.'},
+    {id:'e4', title:'Essay 4 — A different life', limit:'~250 words', prompt:'Imagine a life entirely different from the one you now lead — what would it be?'},
+    {id:'e5', title:'Essay 5 — Choose one', limit:'~250 words', prompt:'Pick ONE: (a) What monument or site would you advise a first-time visitor to your country or city to discover, and why? (b) Certain books, movies or plays have had international success you believe undeserved — choose an example and analyse it. (c) What figure do you most admire and why (any field — arts, literature, politics, business)?'},
+    {id:'e6', title:'Essay 6 — Anything else', limit:'open', prompt:'If there is anything else you would like to share with us that has not already been covered elsewhere in your file, please feel free to use this space.'},
+    {id:'schol', title:'Optional — L\'Oréal Scholarship essay', limit:'1,500 words', prompt:'Discuss the style of leadership that you believe maximises creativity and innovation. (Only required if applying for the L\'Oréal Scholarship — other scholarships, incl. Excellence, Diversity and Paris Saclay Innovation Cluster, are auto-considered with no extra essay; there\'s also a small optional field to add anything else relevant for the Scholarship Jury.)', scholarship:true},
+  ]
+},
+{
+  id:'imd', name:'IMD', tag:'IMD',
+  meta:'11-month MBA · Lausanne · single January intake, six rounds',
+  portal:'https://www.imd.org/degree/mba/admissions/admission-process/',
+  intakes:[
+    { label:'January 2027 (only intake)', rounds:[
+      {round:'Round 1', deadline:'2026-02-03', decision:''},
+      {round:'Round 2', deadline:'2026-03-17', decision:''},
+      {round:'Round 3', deadline:'2026-05-05', decision:''},
+      {round:'Round 4', deadline:'2026-07-14', decision:''},
+      {round:'Round 5', deadline:'2026-09-15', decision:''},
+      {round:'Round 6', deadline:'2026-10-13', decision:''},
+    ]},
+  ],
+  essays:[
+    {id:'i1', title:'Essay 1 — Tell us your story', limit:'400 words', prompt:'We want to hear about the experiences that have shaped you as a person. Share the moments, challenges, and lessons that have influenced your life and personal growth — this is your chance to offer insight into who you are beyond your resume.'},
+    {id:'i2', title:'Essay 2 — Development at IMD', limit:'400 words', prompt:'What areas of personal and professional development do you hope to explore during your time at IMD?'},
+    {id:'i3', title:'Essay 3 — Optional, additional info', limit:'400 words', prompt:'Anything else useful for the Admissions Committee to know — e.g. periods not employed, health-related challenges, academic circumstances, or other unique situations.'},
+    {id:'i-mba5', title:'MBA5 Scholarship essay', limit:'750 words', prompt:'As an IMD MBA5 scholarship recipient, how can you contribute to the learning experience of your class and make an impact beyond graduation? (Merit-based award, CHF 50,000; apply via the Program section of the MBA application form.)', scholarship:true},
+    {id:'i-hilti', title:'Hilti Scholars Program essay', limit:'750 words', prompt:'How can STEM-focused leadership contribute to a sustainable, prosperous, and inclusive future, and what role can an IMD MBA program play? (For candidates with a STEM academic/professional background; covers roughly 50% of tuition, six scholars/year.)', scholarship:true},
+  ]
+},
+{
+  id:'lbs', name:'London Business School', tag:'LBS',
+  meta:'15–21-month MBA · London · single August intake, three stages',
+  portal:'https://www.london.edu/masters-degrees/mba/apply',
+  intakes:[
+    { label:'August 2027 (only intake) — dates TBA, opens late Aug 2026', rounds:[
+      {round:'Stage 1 (typical pattern)', deadline:'', note:'historically early September'},
+      {round:'Stage 2 (typical pattern)', deadline:'', note:'historically early January'},
+      {round:'Stage 3 (typical pattern)', deadline:'', note:'historically late March'},
+    ]},
+  ],
+  essays:[
+    {id:'l1', title:'Question 1 — Post-MBA goals', limit:'500 words', prompt:'What are your post-MBA goals and how will your prior experience and the London Business School programme contribute towards these?'},
+    {id:'l2', title:'Question 2 — What makes you unique', limit:'200 words', prompt:'What makes you unique?'},
+    {id:'l3', title:'Question 3 — Optional, anything else', limit:'500 words', prompt:'Is there any other information you believe the Admissions Committee should know about you and your application to London Business School?'},
+  ],
+  scholarshipNote:"No standalone scholarship essay found. Most LBS funding — the LBS Fund scholarships, Laidlaw Women's Leadership Fund, 30% Club Scholarship for Women, Mo Ibrahim Foundation Scholarship, LBS India Scholarship, etc. — is auto-considered on admission with no separate application (~40% of students receive some aid, and Round 1 applicants reportedly get the strongest scholarship consideration). A handful of regional/specialised funds may ask for a short additional essay — worth checking the specific scholarship's page once you know which ones you're eligible for."
+},
+{
+  id:'oxford', name:'Oxford Saïd', tag:'OXFORD',
+  meta:'1-year MBA · single September intake, five stages',
+  portal:'https://www.sbs.ox.ac.uk/programmes/mbas/mba',
+  intakes:[
+    { label:'September 2027 (only intake)', rounds:[
+      {round:'Stage 1', deadline:'2026-09-02', decision:''},
+      {round:'Stage 2', deadline:'2026-10-05', decision:''},
+      {round:'Stage 3', deadline:'2026-11-04', decision:''},
+      {round:'Stage 4', deadline:'2027-01-06', decision:''},
+      {round:'Stage 5 (final)', deadline:'2027-03-25', decision:''},
+    ]},
+  ],
+  essays:[
+    {id:'o1', title:'Essay — Anything not covered', limit:'250 words', prompt:'Tell us something that is not covered elsewhere in your application which you would like the Admissions Committee to know about you.'},
+    {id:'o2', title:'Re-applicant essay (only if reapplying)', limit:'250 words', prompt:'What improvements have you made in your candidacy since you last applied to the Oxford MBA?'},
+    {id:'o-skoll', title:'Skoll Scholarship — supporting statement', limit:'250 words', prompt:'For candidates with a strong social-entrepreneurship track record: articulate how being part of Oxford, the Saïd MBA, and the Skoll Centre for Social Entrepreneurship would advance your professional growth and your ability to drive systemic social/environmental change. Apply within the MBA application\'s funding section at any stage (1–4); covers full fees plus a living stipend (~£21,805+), up to four awarded per year, followed by an interview if shortlisted.', scholarship:true},
+  ]
+},
+{
+  id:'cambridge', name:'Cambridge Judge', tag:'CAMBRIDGE',
+  meta:'1-year MBA · single September intake, five rounds',
+  portal:'https://www.jbs.cam.ac.uk/programmes/mba/',
+  intakes:[
+    { label:'September 2027 (only intake)', rounds:[
+      {round:'Round 1', deadline:'2026-08-24', decision:''},
+      {round:'Round 2', deadline:'2026-10-05', decision:''},
+      {round:'Round 3', deadline:'2027-01-04', decision:''},
+      {round:'Round 4', deadline:'2027-03-22', decision:''},
+      {round:'Round 5 (final)', deadline:'2027-05-04', decision:''},
+    ]},
+  ],
+  essays:[
+    {id:'c1', title:'Essay 1 — Post-MBA career plan', limit:'500 words', prompt:'Cover: (a) your short and long-term career objectives and how the Cambridge MBA equips you for them; (b) the research you\'ve done into how your target industry/role/location recruits MBA talent, and what they look for; (c) how confident you feel about your short-term goal, what skills/characteristics you already have, and what preparation you\'re doing now.'},
+    {id:'c2', title:'Essay 2 — A professional mistake', limit:'200 words', prompt:'Tell us about a time when you made a professional mistake. How could it have ended differently?'},
+    {id:'c3', title:'Essay 3 — Best team', limit:'200 words', prompt:'Tell us about the best team you worked with. What made the team successful?'},
+    {id:'c4', title:'Essay 4 — Someone else\'s impact on you', limit:'200 words', prompt:'Provide an example of when someone else positively impacted your life. What did you learn from this experience?'},
+  ],
+  scholarshipNote:"No standalone scholarship essay found. Cambridge Judge's scholarships and merit bursaries (fees for Sept 2027 entry are £86,250) appear to be assessed from the main application and are described as highly competitive recognition of the incoming class's achievements, rather than a separate essay track. Confirm directly on the Fees & Funding page once you're closer to applying, in case a specific named award has its own form."
+},
+];
+
+const PROFILES = {
+  insead:{
+    stats:['~1,000 students/yr across two intakes','80+ nationalities per cohort','10-month program','avg salary ~$122–123k (2023 grads)','~61% of a recent class went into consulting'],
+    culture:"The recurring pitch across GMAT Club and Poets&Quants coverage is that INSEAD is the most genuinely global classroom on the market — students rotate between the France and Singapore (and now Abu Dhabi) campuses, and cohorts routinely span 80+ nationalities with no single dominant one. Forum threads describe the ten months as compressed and relentless — less a chance to explore than a sprint through a program you're expected to already have direction for.",
+    outcomes:"Consulting dominates outcomes (well over half a recent graduating class), which shows up repeatedly in both P&Q's employment reporting and forum advice to applicants — INSEAD is described as a strong bet if consulting or a similar generalist path is the goal, less so as a place to casually explore other functions. P&Q's 2024/25 employment data also flagged a rougher hiring year than the school has seen in over a decade, with a meaningfully lower share of the class holding an offer three months out than in prior cohorts — a data point worth weighing given the compressed timeline leaves little room to recover from a slow search.",
+    forum:"Campus choice (France vs Singapore) is a recurring GMAT Club debate — Singapore is often described as somewhat less competitive to get into with a strong Asia-Pacific network, France as carrying more weight for a Europe/US-facing career. The one-year format itself draws mixed reactions: praised for speed and cost relative to two-year US programs, criticized by some posters for leaving too little runway to genuinely pivot industry and function at once.",
+    fit:"Best fit if you already have a fairly clear post-MBA direction and want maximum network breadth fast, rather than two years of runway to reinvent yourself."
+  },
+  hec:{
+    stats:['#5 globally, 2026 QS ranking','94% of MBA students international, 44 nationalities','rolling admissions, monthly deadlines','avg salary ~$124k (2023 grads), 91% offers within 3 months','12–16 month flexible format'],
+    culture:"HEC's own value-for-money numbers (near-perfect QS score built on tuition vs salary growth) line up with how it's discussed on forums — consistently framed as the strongest ROI play among the European set, especially for candidates comparing total cost against INSEAD or LBS. The flexible 12–16 month length and genuinely rolling, monthly-deadline admissions process is called out repeatedly as unusually forgiving for candidates who decide late or want more time to build a competitive application.",
+    outcomes:"Employment reporting shows a high rate of what the industry calls the 'triple jump' — changing industry, function, and geography simultaneously — with roughly a third of a recent class doing all three at once, among the higher rates in this school set. Salary growth three years out is reported as unusually strong in FT's ranking data.",
+    forum:"The most consistent critique in forum discussion is brand recognition outside Europe — HEC is well understood by European and increasingly Asian recruiters, but posters note it still requires more explaining to a US employer than INSEAD or an M7 name. Its rolling, near-continuous deadline calendar is seen as both a strength (flexibility) and a source of confusion for applicants trying to figure out which round actually carries an admissions or scholarship advantage.",
+    fit:"Best fit for candidates prioritizing ROI and application-timeline flexibility, especially if a European base (or Europe-adjacent career) is the target."
+  },
+  imd:{
+    stats:['~90 students per cohort, ~38 nationalities','avg age ~31, ~7 years work experience','12-month program, Lausanne + Singapore module','Poets&Quants MBA Program of the Year (2024/25 curriculum overhaul)','applications reportedly up ~15% after 2024 redesign'],
+    culture:"IMD is consistently described as the most intense of the group — student interviews collected by Poets&Quants describe multi-day stretches of minimal sleep during peak project weeks, framed by students themselves as a deliberate feature of the leadership training rather than a design flaw. Small rotating 5–6 person teams and a genuinely tiny cohort size are cited as producing unusually close peer bonds compared to larger programs.",
+    outcomes:"IMD skews toward candidates who are already more senior (average around seven years' experience) and targets general management and leadership tracks at multinationals rather than functioning as a springboard into consulting or banking recruiting the way INSEAD does. Individual coaching — a leadership coach paired with more personal, psychology-informed development work — is one of the most consistently praised features across student accounts.",
+    forum:"Forum and P&Q coverage frame IMD as a 'reach but worth it' school for the profile it wants: mature, execution-focused, not looking to pivot into a brand-new function. Brand recognition is strong in Europe (particularly Switzerland/DACH) and among multinational industrials, but posters note it carries less immediate recognition among US or generalist recruiters than INSEAD or LBS.",
+    fit:"Best fit for candidates who are already fairly senior and want to accelerate into general management or a leadership track — less suited as a career-switch vehicle into a new industry or function."
+  },
+  lbs:{
+    stats:['~130+ nationalities, ~94% international','flexible 15/18/21-month format','2-year UK Graduate visa for post-study job search','historically consulting > finance > tech in placement','mean base salary historically mid-to-high £80–90ks pre-bonus'],
+    culture:"GMAT Club student reviews are unusually candid about LBS being a strongly regional play: consistently praised for finance, consulting and banking recruiting into London and the wider EMEA market, with tech and entrepreneurship communities described as a newer but growing addition. The flexible-length format (15, 18 or 21 months) is cited as a genuine, distinctive advantage — letting students extend for an internship, exchange, or second internship without switching programs.",
+    outcomes:"Historical placement leans consulting first, then finance, then technology, with the UK absorbing the largest single share of the graduating class. The post-study Graduate visa (two years to work in the UK after graduating) is repeatedly cited by international applicants as a meaningful practical draw independent of the program itself.",
+    forum:"The sharpest critique that recurs across reviews is that LBS's brand strength is real but geographically concentrated — several reviewers describe it as an excellent choice for a EMEA-anchored career and a noticeably weaker signal for candidates targeting North America specifically, with a couple of blunter reviews warning candidates without European ties to weigh that carefully before committing over a US program.",
+    fit:"Best fit if the target career is UK/Europe-anchored (or genuinely open to it) — worth stress-testing the fit further if the goal is a North America-based career."
+  },
+  oxford:{
+    stats:['1-year program, single September intake','collegiate system — housed with non-MBA students','~80% combined placement into consulting/finance/tech','6–10% into social impact/public sector roles','light essay load — one required 250-word essay'],
+    culture:"Oxford Saïd's most distinctive, consistently-cited feature across forum comparisons is the Oxford collegiate system itself — MBA students are assigned to one of the university's residential colleges and live alongside PhD students and other master's candidates from across the university, not just other MBAs. mbamission's side-by-side coverage and GMAT Club threads both flag this as a genuine point of difference from every other school on this list, expanding the network well beyond the business school.",
+    outcomes:"Placement outcomes cluster heavily in consulting, finance and tech like its peers, but Oxford sends a meaningfully higher share of graduates into social impact and public-sector roles than most comparable one-year programs — a pattern connected in forum discussion to the Skoll Centre for Social Entrepreneurship's visibility within the school.",
+    forum:"GMAT Club threads comparing Oxford and Cambridge head-to-head tend to converge on the same conclusion: outcomes and prestige are close enough that college choice, specific faculty fit, and personal preference for the city end up mattering more than any ranking gap between the two. The application itself is noted as unusually light on essays relative to its peers, with more weight placed on structured data fields.",
+    fit:"Best fit if the Oxford brand and cross-university (not just cross-cohort) network genuinely matter to you, or if social-impact/public-sector paths are part of the plan."
+  },
+  cambridge:{
+    stats:['1-year program, single September intake','also collegiate — housed across university colleges','~80% combined placement into consulting/finance/tech','5–8% into healthcare, reflecting Cambridge biotech cluster','project-based: Cambridge Venture Project, Global Consulting Project'],
+    culture:"Cambridge Judge mirrors Oxford's one-year, collegiate structure closely, and forum comparisons frequently treat the two as a package deal — applicants are advised not to bother applying to both in the same round since admission odds are seen as fairly correlated. Reddit and Blind threads are notably blunter than GMAT Club's about the pure economics: candidates self-funding without a clear post-MBA plan raise real concerns about a year of tuition plus forgone income, more so than sponsored or career-clear applicants.",
+    outcomes:"Placement splits closely resemble Oxford's (roughly 80% combined into consulting, finance and tech), with a stronger healthcare/life-sciences pipeline than Oxford, tied to Cambridge's biotech cluster. Project-based courses — the Cambridge Venture Project and Global Consulting Project — are the most consistently cited highlights in student accounts picked up by Poets&Quants.",
+    forum:"Cohort size is smaller and tighter-knit than INSEAD or LBS; brand pull from the Cambridge name travels well in Asia and much of Europe even in threads that note MBA-specific recruiter recognition trails the bigger two-year US programs and INSEAD/LBS in some markets.",
+    fit:"Best fit alongside (or instead of) Oxford for the same one-year, collegiate-network profile — the deciding factor in most forum threads ends up being personal fit and city, not a meaningful gap in outcomes."
+  }
+};
+
+function renderProfiles(){
+  const list = document.getElementById('profileList');
+  SCHOOLS.forEach(s=>{
+    const p = PROFILES[s.id];
+    if(!p) return;
+    const card = document.createElement('div');
+    card.className = 'profile-card';
+    card.innerHTML = `
+      <h2>${s.name}</h2>
+      <div class="profile-stats">${p.stats.map(st=>`<span class="pstat">${st}</span>`).join('')}</div>
+      <div class="profile-section"><div class="ps-label">Culture &amp; vibe</div><p>${p.culture}</p></div>
+      <div class="profile-section"><div class="ps-label">Career outcomes</div><p>${p.outcomes}</p></div>
+      <div class="profile-section"><div class="ps-label">What forums argue about</div><p>${p.forum}</p></div>
+      <div class="fit-line">${p.fit}</div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+// ---------- helpers ----------
+function parseDate(s){ if(!s) return null; const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); }
+function fmtDate(s){
+  const d = parseDate(s); if(!d) return '—';
+  return d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+}
+function daysLeft(s){
+  const d = parseDate(s); if(!d) return null;
+  const diff = Math.ceil((d - new Date(TODAY.getFullYear(),TODAY.getMonth(),TODAY.getDate())) / 86400000);
+  return diff;
+}
+function wordCount(text){ const t = text.trim(); return t ? t.split(/\s+/).length : 0; }
+
+// ---------- header chips + next deadline ----------
+const chipRow = document.getElementById('chipRow');
+SCHOOLS.forEach(s=>{
+  const c = document.createElement('span'); c.className='chip'; c.textContent = s.tag; chipRow.appendChild(c);
+});
+
+let allDeadlines = [];
+SCHOOLS.forEach(s=>{
+  s.intakes.forEach(intake=>{
+    intake.rounds.forEach(r=>{
+      if(r.deadline){
+        allDeadlines.push({school:s.name, tag:s.tag, intake:intake.label, round:r.round, deadline:r.deadline, decision:r.decision, note:r.note});
+      }
+    });
+  });
+});
+allDeadlines.sort((a,b)=> parseDate(a.deadline)-parseDate(b.deadline));
+
+const future = allDeadlines.filter(d=>daysLeft(d.deadline) >= 0);
+const nextBox = document.getElementById('nextDeadline');
+if(future.length){
+  const n = future[0];
+  const dl = daysLeft(n.deadline);
+  nextBox.innerHTML = `
+    <div>
+      <div class="label">Next deadline</div>
+      <div class="main">${n.school} — ${n.round} <span style="color:#C99A5B;font-size:13px;">(${n.intake})</span></div>
+    </div>
+    <div class="days">${dl===0?'today':dl}<span>${dl===0?'':'days · '+fmtDate(n.deadline)}</span></div>
+  `;
+} else {
+  nextBox.innerHTML = `<div class="main">No upcoming deadlines found — check portals directly.</div>`;
+}
+
+// ---------- timeline render ----------
+const timelineList = document.getElementById('timelineList');
+let currentMonth = '';
+allDeadlines.forEach(d=>{
+  const dt = parseDate(d.deadline);
+  const monthKey = dt.toLocaleDateString('en-GB',{month:'long',year:'numeric'});
+  if(monthKey !== currentMonth){
+    currentMonth = monthKey;
+    const mg = document.createElement('div'); mg.className='month-label'; mg.textContent = monthKey;
+    timelineList.appendChild(mg);
+  }
+  const dl = daysLeft(d.deadline);
+  const row = document.createElement('div');
+  row.className = 'tl-row' + (dl < 0 ? ' past' : '');
+  let dayCls = 'later', dayTxt = dl+' days';
+  if(dl < 0){ dayCls='gone'; dayTxt='closed'; }
+  else if(dl===0){ dayCls='urgent'; dayTxt='today'; }
+  else if(dl<=14){ dayCls='urgent'; dayTxt=dl+'d left'; }
+  else if(dl<=45){ dayCls='soon'; dayTxt=dl+'d left'; }
+  row.innerHTML = `
+    <div class="tl-date">${fmtDate(d.deadline)}</div>
+    <div class="tl-main">
+      <div class="tl-school">${d.school} <span class="tl-intake">${d.intake.split(' ')[0]} ${d.intake.match(/\d{4}/)?d.intake.match(/\d{4}/)[0]:''}</span></div>
+      <div class="tl-round">${d.round}${d.decision?' · decision ~'+fmtDate(d.decision):''}${d.note?' · '+d.note:''}</div>
+    </div>
+    <div class="tl-days ${dayCls}">${dayTxt}</div>
+  `;
+  timelineList.appendChild(row);
+});
+
+function renderEssayBlock(schoolId, e, isScholarship){
+  return `
+    <div class="essay${isScholarship?' essay-schol':''}">
+      <div class="essay-head">
+        <div class="essay-title">${isScholarship?'<span class="schol-badge">SCHOLARSHIP</span> ':''}${e.title}</div>
+        <div class="essay-limit">${e.limit}</div>
+      </div>
+      <div class="essay-prompt">${e.prompt}</div>
+      <div class="essay-editor-wrap">
+        <textarea class="essay-box" data-key="essay:${schoolId}:${e.id}" placeholder="Draft, outline, or rough notes for this essay..."></textarea>
+        <div class="essay-footer">
+          <span class="wordcount" data-wc="essay:${schoolId}:${e.id}"></span>
+          <span>
+            <select class="status-select" data-key="status:${schoolId}:${e.id}">
+              <option value="not-started">not started</option>
+              <option value="brainstorming">brainstorming</option>
+              <option value="drafting">drafting</option>
+              <option value="revising">revising</option>
+              <option value="final">final</option>
+            </select>
+            <span class="save-indicator" data-save="essay:${schoolId}:${e.id}">saved</span>
+          </span>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ---------- schools panel ----------
+const schoolList = document.getElementById('schoolList');
+SCHOOLS.forEach(s=>{
+  const card = document.createElement('div');
+  card.className = 'school-card';
+  card.id = 'card-'+s.id;
+
+  let intakeHtml = '';
+  s.intakes.forEach(intake=>{
+    intakeHtml += `<div class="intake-block-title">${intake.label}</div>`;
+    intakeHtml += `<table class="intake-table"><tr><th>Round</th><th>Deadline</th><th>Decision</th></tr>`;
+    intake.rounds.forEach(r=>{
+      const dl = r.deadline ? daysLeft(r.deadline) : null;
+      const past = dl!==null && dl<0;
+      intakeHtml += `<tr class="${past?'past':''}">
+        <td class="rd">${r.round}</td>
+        <td class="dt">${r.deadline?fmtDate(r.deadline):(r.note||'TBA')}</td>
+        <td class="dt">${r.decision?fmtDate(r.decision):'—'}</td>
+      </tr>`;
+    });
+    intakeHtml += `</table>`;
+  });
+
+  let essaysHtml = '';
+  s.essays.filter(e=>!e.scholarship).forEach(e=>{
+    essaysHtml += renderEssayBlock(s.id, e);
+  });
+
+  let scholEssaysHtml = '';
+  s.essays.filter(e=>e.scholarship).forEach(e=>{
+    scholEssaysHtml += renderEssayBlock(s.id, e, true);
+  });
+  let scholSectionHtml = '';
+  if(scholEssaysHtml){
+    scholSectionHtml = `<div class="section-label">Scholarship essays (optional)</div>${scholEssaysHtml}`;
+  } else if(s.scholarshipNote){
+    scholSectionHtml = `<div class="section-label">Scholarship essays (optional)</div><div class="timeline-note">${s.scholarshipNote}</div>`;
+  }
+
+  card.innerHTML = `
+    <div class="school-head" onclick="toggleCard('${s.id}')">
+      <div>
+        <h2>${s.name}</h2>
+        <div class="meta">${s.meta}</div>
+      </div>
+      <div class="chevron">▸</div>
+    </div>
+    <div class="school-body">
+      <div class="section-label">Application deadlines</div>
+      ${intakeHtml}
+      <div style="margin:6px 0 4px;"><a href="${s.portal}" target="_blank" style="font-size:11.5px;color:var(--brass);">Official admissions page →</a></div>
+      <div class="section-label">Essay bank</div>
+      ${essaysHtml}
+      ${scholSectionHtml}
+    </div>
+  `;
+  schoolList.appendChild(card);
+});
+
+function toggleCard(id){
+  document.getElementById('card-'+id).classList.toggle('open');
+}
+
+// ---------- notes / scratch panel ----------
+const schoolScratchList = document.getElementById('schoolScratchList');
+SCHOOLS.forEach(s=>{
+  const block = document.createElement('div');
+  block.className = 'scratch-block';
+  block.innerHTML = `
+    <div class="scratch-title">${s.name} — rough work</div>
+    <div class="scratch-hint">Free-form space for this school specifically — "why this school" angles, alumni conversation notes, program-specific hooks.</div>
+    <textarea class="scratch-box" data-key="scratch:${s.id}" placeholder="Rough notes for ${s.name}..."></textarea>
+    <div class="essay-footer"><span class="wordcount" data-wc="scratch:${s.id}"></span><span class="save-indicator" data-save="scratch:${s.id}">saved</span></div>
+  `;
+  schoolScratchList.appendChild(block);
+});
+
+// ---------- tabs ----------
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ---------- storage: load + autosave ----------
+async function loadAll(){
+  const textareas = document.querySelectorAll('textarea[data-key]');
+  for(const ta of textareas){
+    try{
+      const res = await window.storage.get(ta.dataset.key, false);
+      if(res && res.value) ta.value = res.value;
+    }catch(e){ /* key not found yet, ignore */ }
+    updateWordCount(ta);
+  }
+  const selects = document.querySelectorAll('select[data-key]');
+  for(const sel of selects){
+    try{
+      const res = await window.storage.get(sel.dataset.key, false);
+      if(res && res.value) sel.value = res.value;
+    }catch(e){ /* ignore */ }
+  }
+  // general scratch
+  const gen = document.getElementById('generalScratch');
+  try{
+    const res = await window.storage.get('scratch:general', false);
+    if(res && res.value) gen.value = res.value;
+  }catch(e){}
+  updateWordCount(gen, 'wc-general');
+}
+
+function updateWordCount(el, explicitId){
+  const wc = wordCount(el.value);
+  const target = explicitId ? document.getElementById(explicitId) : document.querySelector(`[data-wc="${el.dataset.key}"]`);
+  if(!target) return;
+  target.textContent = wc + ' words';
+  const limitAttr = el.closest('.essay-editor-wrap');
+  target.classList.remove('over');
+}
+
+let saveTimers = {};
+function debounceSave(key, value, indicatorSelector){
+  clearTimeout(saveTimers[key]);
+  saveTimers[key] = setTimeout(async ()=>{
+    try{
+      await window.storage.set(key, value, false);
+      const ind = document.querySelector(indicatorSelector);
+      if(ind){ ind.classList.add('show'); setTimeout(()=>ind.classList.remove('show'), 1400); }
+    }catch(e){ console.error('save failed', e); }
+  }, 600);
+}
+
+document.addEventListener('input', (ev)=>{
+  const el = ev.target;
+  if(el.tagName === 'TEXTAREA' && el.dataset.key){
+    updateWordCount(el);
+    debounceSave(el.dataset.key, el.value, `[data-save="${el.dataset.key}"]`);
+  }
+  if(el.id === 'generalScratch'){
+    updateWordCount(el, 'wc-general');
+    debounceSave('scratch:general', el.value, '#save-general');
+  }
+});
+document.addEventListener('change', (ev)=>{
+  const el = ev.target;
+  if(el.tagName === 'SELECT' && el.dataset.key){
+    debounceSave(el.dataset.key, el.value, `[data-save="${el.dataset.key}"]`); // reuse essay save indicator area loosely
+  }
+});
+
+renderProfiles();
+loadAll();
+</script>
+</body>
+</html>
