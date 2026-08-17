@@ -1,0 +1,25 @@
+{
+  "name": "mba_dossier",
+  "version": "1.0.0",
+  "description": "MBA Essays and deadlines in one place",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aryamanvepa/MBA_dossier.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aryamanvepa/MBA_dossier/issues"
+  },
+  "homepage": "https://github.com/aryamanvepa/MBA_dossier#readme",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  }
+}

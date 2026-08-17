@@ -89,8 +89,37 @@ h1.title{
 .next-deadline .days{font-family:'IBM Plex Mono',monospace;font-size:26px;color:#fff;}
 .next-deadline .days span{font-size:12px;color:var(--brass-soft);display:block;font-family:'Inter';margin-top:2px;}
 
+/* ---------- gamification header bar ---------- */
+.game-bar{
+  margin-top:14px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  background:var(--card);border:1px solid var(--line);border-radius:8px;
+  padding:12px 16px;box-shadow:var(--shadow);
+}
+.game-level{font-family:'Fraunces',serif;font-weight:600;font-size:15px;color:var(--ink);white-space:nowrap;}
+.game-level .lv-num{color:var(--brass);}
+.xp-track{flex:1;min-width:140px;}
+.xp-bar-outer{height:8px;background:var(--paper-alt);border:1px solid var(--line);border-radius:100px;overflow:hidden;}
+.xp-bar-inner{height:100%;width:0%;background:linear-gradient(90deg,var(--brass-soft),var(--brass));border-radius:100px;transition:width .5s ease;}
+.xp-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-soft);margin-top:3px;}
+.streak-chip{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--oxblood);
+  background:var(--paper-alt);border:1px solid var(--line);border-radius:100px;
+  padding:4px 10px;white-space:nowrap;
+}
+.badges-chip{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);
+  cursor:pointer;white-space:nowrap;border-bottom:1px dashed var(--line);
+}
+.sprint-btn{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  background:var(--ink);color:var(--paper);border:none;border-radius:6px;
+  padding:8px 14px;cursor:pointer;white-space:nowrap;
+}
+.sprint-btn:hover{background:var(--oxblood);}
+
 /* ---------- tabs ---------- */
-.tabs{display:flex;gap:2px;margin:30px 0 22px;border-bottom:1px solid var(--line);}
+.tabs{display:flex;gap:2px;margin:30px 0 22px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
 .tab-btn{
   font-family:'IBM Plex Mono',monospace;
   font-size:12.5px;
@@ -241,7 +270,11 @@ h1.title{
   border-radius:6px;
   margin-bottom:12px;
   background:#FEFCF6;
+  transition:outline-color .3s ease;
+  outline:2px solid transparent;
+  outline-offset:2px;
 }
+.essay.flash{outline-color:var(--brass-soft);}
 .essay.essay-schol{border-color:var(--brass-soft);}
 .schol-badge{
   font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.06em;
@@ -266,7 +299,7 @@ textarea.essay-box{
   padding:10px 12px;background:#fff;color:var(--ink);
 }
 textarea.essay-box:focus{outline:none;border-color:var(--brass-soft);}
-.essay-footer{display:flex;justify-content:space-between;align-items:center;margin-top:6px;}
+.essay-footer{display:flex;justify-content:space-between;align-items:center;margin-top:6px;flex-wrap:wrap;gap:8px;}
 .wordcount{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);}
 .wordcount.over{color:var(--oxblood);font-weight:600;}
 .status-select{
@@ -291,6 +324,139 @@ footer.foot{
   margin-top:50px;padding-top:16px;border-top:1px solid var(--line);
   font-size:11.5px;color:var(--ink-soft);
 }
+
+/* ---------- toasts ---------- */
+#toastContainer{position:fixed;top:18px;right:18px;z-index:900;display:flex;flex-direction:column;gap:8px;align-items:flex-end;pointer-events:none;}
+.toast{
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--paper);
+  background:var(--ink);border-radius:6px;padding:10px 14px;
+  box-shadow:var(--shadow);opacity:0;transform:translateX(20px);
+  transition:opacity .25s ease, transform .25s ease;max-width:280px;
+}
+.toast.badge{background:var(--brass);}
+.toast.show{opacity:1;transform:translateX(0);}
+
+/* ---------- overlays (level up / sprint picker / boss battle) ---------- */
+.overlay{
+  position:fixed;inset:0;background:rgba(28,42,71,.55);
+  display:flex;align-items:center;justify-content:center;z-index:1000;
+  opacity:0;pointer-events:none;transition:opacity .2s ease;
+}
+.overlay.show{opacity:1;pointer-events:auto;}
+.overlay-card{
+  background:var(--card);border-radius:10px;max-width:440px;width:92%;
+  padding:28px 26px;box-shadow:0 12px 40px rgba(0,0,0,.3);
+  text-align:center;
+}
+.overlay-card.wide{max-width:520px;text-align:left;}
+
+.levelup-badge{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--brass);margin-bottom:8px;
+}
+.levelup-title{font-family:'Fraunces',serif;font-weight:600;font-size:30px;margin:0 0 6px;}
+.levelup-sub{color:var(--ink-soft);font-size:14px;margin-bottom:18px;}
+.levelup-close{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;background:var(--ink);color:var(--paper);
+  border:none;border-radius:6px;padding:8px 16px;cursor:pointer;
+}
+
+.field-row{margin-bottom:14px;text-align:left;}
+.field-row label{display:block;font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--brass);margin-bottom:6px;}
+.field-row select{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:5px;font-family:'Inter';font-size:13.5px;background:#fff;}
+.duration-row{display:flex;gap:8px;}
+.dur-btn{
+  flex:1;font-family:'IBM Plex Mono',monospace;font-size:12.5px;padding:8px 0;
+  border:1px solid var(--line);border-radius:6px;background:#fff;cursor:pointer;
+}
+.dur-btn.active{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px;}
+.btn{font-family:'IBM Plex Mono',monospace;font-size:12.5px;padding:8px 16px;border-radius:6px;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink);}
+.btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+.btn.primary:disabled{opacity:.4;cursor:not-allowed;}
+
+/* ---------- sprint HUD ---------- */
+#sprintHud{
+  position:fixed;bottom:18px;right:18px;z-index:850;
+  background:var(--ink);color:var(--paper);border-radius:10px;
+  padding:14px 16px;display:none;align-items:center;gap:12px;
+  box-shadow:var(--shadow);min-width:220px;
+}
+#sprintHud.show{display:flex;}
+.sprint-ring{width:48px;height:48px;flex-shrink:0;}
+.sprint-ring circle{fill:none;stroke-width:5;}
+.sprint-ring .bg{stroke:rgba(245,240,227,.2);}
+.sprint-ring .fg{stroke:var(--brass-soft);stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset 1s linear;}
+.sprint-info{flex:1;min-width:0;}
+.sprint-time{font-family:'IBM Plex Mono',monospace;font-size:18px;}
+.sprint-essay{font-size:11.5px;color:var(--brass-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px;}
+.sprint-stop{background:none;border:none;color:var(--paper);opacity:.7;cursor:pointer;font-size:16px;}
+.sprint-stop:hover{opacity:1;}
+
+/* ---------- quest board ---------- */
+.quest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;}
+.quest-card{
+  background:var(--card);border:1px solid var(--line);border-radius:8px;
+  padding:14px 16px;cursor:pointer;box-shadow:var(--shadow);transition:transform .12s ease;
+}
+.quest-card:hover{transform:translateY(-2px);border-color:var(--brass-soft);}
+.quest-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px;}
+.quest-school{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--brass);}
+.quest-title{font-weight:600;font-size:13.5px;margin:2px 0 0;line-height:1.3;}
+.status-pill{
+  font-family:'IBM Plex Mono',monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:.04em;
+  padding:2px 7px;border-radius:100px;white-space:nowrap;
+}
+.status-pill.not-started{background:var(--line-soft);color:var(--ink-soft);}
+.status-pill.brainstorming{background:#F1E7D0;color:var(--brass);}
+.status-pill.drafting{background:#DCE6DC;color:var(--sage);}
+.status-pill.revising{background:#F3E0DE;color:var(--oxblood);}
+.status-pill.final{background:var(--ink);color:var(--paper);}
+.quest-wc-bar{height:5px;background:var(--paper-alt);border-radius:100px;overflow:hidden;margin:8px 0 6px;}
+.quest-wc-fill{height:100%;background:var(--sage);}
+.quest-wc-fill.over{background:var(--oxblood);}
+.quest-meta-row{display:flex;justify-content:space-between;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-soft);}
+.quest-score{color:var(--brass);font-weight:600;}
+.quest-deadline.urgent{color:var(--oxblood);font-weight:600;}
+
+/* ---------- badges tab ---------- */
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
+.badge-card{
+  background:var(--card);border:1px solid var(--line);border-radius:8px;
+  padding:16px 12px;text-align:center;
+}
+.badge-card.locked{opacity:.4;filter:grayscale(1);}
+.badge-icon{font-size:28px;margin-bottom:6px;}
+.badge-title{font-weight:600;font-size:12px;margin-bottom:4px;}
+.badge-desc{font-size:10.5px;color:var(--ink-soft);line-height:1.4;}
+
+/* ---------- feedback panel ---------- */
+.feedback-btn{
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--brass);
+  background:none;border:1px solid var(--brass-soft);border-radius:4px;
+  padding:3px 8px;cursor:pointer;
+}
+.feedback-btn:hover{background:var(--paper-alt);}
+.feedback-btn:disabled{opacity:.5;cursor:wait;}
+.feedback-panel{margin-top:10px;padding:12px 14px;background:var(--paper-alt);border-radius:6px;border-left:3px solid var(--brass-soft);display:none;}
+.feedback-panel.show{display:block;}
+.fb-score-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+.fb-score-label{font-family:'IBM Plex Mono',monospace;font-size:10px;width:88px;color:var(--ink-soft);flex-shrink:0;}
+.fb-score-bar{flex:1;height:6px;background:#fff;border-radius:100px;overflow:hidden;border:1px solid var(--line);}
+.fb-score-fill{height:100%;background:var(--sage);}
+.fb-score-val{font-family:'IBM Plex Mono',monospace;font-size:10.5px;width:28px;text-align:right;flex-shrink:0;}
+.fb-overall{font-family:'Fraunces',serif;font-weight:600;font-size:15px;margin:8px 0 6px;}
+.fb-suggestions{margin:6px 0 0;padding-left:18px;font-size:12.5px;}
+.fb-suggestions li{margin-bottom:4px;}
+.fb-note{font-size:12px;font-style:italic;color:var(--ink-soft);margin-top:8px;}
+.fb-error{font-size:12px;color:var(--oxblood);}
+
+/* ---------- boss battle ---------- */
+.checklist-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--line-soft);font-size:13px;}
+.checklist-item input{margin-top:2px;}
+.checklist-auto{font-size:12.5px;padding:6px 0;}
+.checklist-auto.ok{color:var(--sage);}
+.checklist-auto.warn{color:var(--oxblood);}
 </style>
 </head>
 <body>
@@ -299,19 +465,37 @@ footer.foot{
   <header class="masthead">
     <div class="eyebrow">Application Cycle — 2026 / 2027</div>
     <h1 class="title">MBA Application Dossier</h1>
-    <div class="subtitle">Deadlines, essay banks, and a running draft workspace for the January and September intakes across your six target schools. Drafts autosave to this browser.</div>
+    <div class="subtitle">Deadlines, essay banks, and a running draft workspace for the January and September intakes across your six target schools. Now with sprints, streaks and XP to keep you moving. Drafts autosave to a local file on this machine.</div>
+    <div class="timeline-note" id="hostingNotice" style="display:none;margin-top:14px;">Static hosted copy — no server to talk to, so drafts and XP save to this browser only (not synced with a locally-run copy), and AI feedback is unavailable here. Clone the repo and run <code>npm start</code> for the full version.</div>
     <div class="school-chips" id="chipRow"></div>
     <div class="next-deadline" id="nextDeadline"></div>
+    <div class="game-bar">
+      <div class="game-level" id="gameLevel">Lv <span class="lv-num">1</span> — Blank Page</div>
+      <div class="xp-track">
+        <div class="xp-bar-outer"><div class="xp-bar-inner" id="xpBarInner"></div></div>
+        <div class="xp-label" id="xpLabel">0 / 100 XP</div>
+      </div>
+      <div class="streak-chip" id="streakChip">🔥 0-day streak</div>
+      <div class="badges-chip" id="badgesChip">0/0 badges</div>
+      <button type="button" class="sprint-btn" id="sprintBtn">⏱ Start Sprint</button>
+    </div>
   </header>
 
   <div class="tabs">
-    <button class="tab-btn active" data-tab="timeline">Timeline</button>
+    <button class="tab-btn active" data-tab="quest">Quest Board</button>
+    <button class="tab-btn" data-tab="timeline">Timeline</button>
     <button class="tab-btn" data-tab="schools">Schools &amp; Essays</button>
     <button class="tab-btn" data-tab="profiles">School Profiles</button>
     <button class="tab-btn" data-tab="notes">Rough Work</button>
+    <button class="tab-btn" data-tab="badges">Badges</button>
   </div>
 
-  <div class="tab-panel active" id="panel-timeline">
+  <div class="tab-panel active" id="panel-quest">
+    <div class="timeline-note">Every essay across all six schools, in one view. Word count, status, deadline pressure and your latest AI score — click a card to jump straight into that draft.</div>
+    <div class="quest-grid" id="questGrid"></div>
+  </div>
+
+  <div class="tab-panel" id="panel-timeline">
     <div class="timeline-note">Every application round for both intakes, merged chronologically. Greyed rows have already closed. Verify exact times against each school's portal — most close at 11:59pm in the school's local timezone.</div>
     <div id="timelineList"></div>
   </div>
@@ -335,13 +519,121 @@ footer.foot{
     <div id="schoolScratchList"></div>
   </div>
 
+  <div class="tab-panel" id="panel-badges">
+    <div class="timeline-note">Badges unlock automatically as you write, revise, sprint, and submit. Locked ones are greyed out until earned.</div>
+    <div class="badge-grid" id="badgeGrid"></div>
+  </div>
+
   <footer class="foot">
     Deadlines compiled Aug 2026 from official admissions pages (INSEAD, HEC Paris) and current-cycle aggregators for Oxford Saïd, Cambridge Judge, IMD and LBS. Schools revise rounds and essay wording between cycles — re-check the live portal before you submit. LBS has not yet published exact 2027-intake round dates (opens late Aug 2026); the pattern shown is historical.
   </footer>
 </div>
 
+<div id="toastContainer"></div>
+
+<div class="overlay" id="levelUpOverlay">
+  <div class="overlay-card">
+    <div class="levelup-badge">Level Up</div>
+    <h2 class="levelup-title" id="levelUpTitle">Level 2</h2>
+    <div class="levelup-sub" id="levelUpSub">Draft Apprentice</div>
+    <button type="button" class="levelup-close" id="levelUpClose">Keep writing</button>
+  </div>
+</div>
+
+<div class="overlay" id="sprintPickerOverlay">
+  <div class="overlay-card">
+    <div class="levelup-badge">Focus Sprint</div>
+    <h2 class="levelup-title" style="font-size:22px;">Pick your quest</h2>
+    <div class="field-row">
+      <label>Essay</label>
+      <select id="sprintEssaySelect"></select>
+    </div>
+    <div class="field-row">
+      <label>Duration</label>
+      <div class="duration-row" id="sprintDurationRow">
+        <button type="button" class="dur-btn" data-min="10">10m</button>
+        <button type="button" class="dur-btn active" data-min="15">15m</button>
+        <button type="button" class="dur-btn" data-min="25">25m</button>
+        <button type="button" class="dur-btn" data-min="45">45m</button>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn" id="sprintCancel">Cancel</button>
+      <button type="button" class="btn primary" id="sprintStart">Start Sprint</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="bossBattleOverlay">
+  <div class="overlay-card wide">
+    <div class="levelup-badge">Final Check</div>
+    <h2 class="levelup-title" id="bbTitle" style="font-size:22px;">Essay</h2>
+    <div id="bbAutoChecks"></div>
+    <div id="bbManualChecks"></div>
+    <div class="modal-actions">
+      <button type="button" class="btn" id="bbCancel">Cancel</button>
+      <button type="button" class="btn primary" id="bbConfirm" disabled>Submit as Final</button>
+    </div>
+  </div>
+</div>
+
+<div id="sprintHud">
+  <svg class="sprint-ring" viewBox="0 0 48 48">
+    <circle class="bg" cx="24" cy="24" r="20"></circle>
+    <circle class="fg" id="sprintRingFg" cx="24" cy="24" r="20" stroke-dasharray="125.6" stroke-dashoffset="0"></circle>
+  </svg>
+  <div class="sprint-info">
+    <div class="sprint-time" id="sprintTime">15:00</div>
+    <div class="sprint-essay" id="sprintEssayLabel">—</div>
+  </div>
+  <button type="button" class="sprint-stop" id="sprintStop" title="End sprint">✕</button>
+</div>
+
 <script>
 const TODAY = new Date();
+
+// ---------- persistence shim (replaces window.storage from the Claude Artifact runtime) ----------
+// Prefers the local Express server (real cross-session file persistence + AI feedback proxy).
+// Falls back to browser localStorage when no server answers (e.g. this page hosted on GitHub Pages,
+// which serves index.html but can't run server.js) so the app still works, just single-browser.
+let SERVER_AVAILABLE = null;
+async function detectServer(){
+  try{
+    const r = await fetch('/api/storage', { method:'GET' });
+    SERVER_AVAILABLE = r.ok;
+  }catch(e){
+    SERVER_AVAILABLE = false;
+  }
+}
+
+const LS_PREFIX = 'mba-dossier:';
+window.storage = {
+  async get(key){
+    if(SERVER_AVAILABLE){
+      const r = await fetch('/api/storage/'+encodeURIComponent(key));
+      if(!r.ok) throw new Error('not found');
+      return r.json();
+    }
+    const v = localStorage.getItem(LS_PREFIX+key);
+    if(v===null) throw new Error('not found');
+    return { value: v };
+  },
+  async set(key, value){
+    if(SERVER_AVAILABLE){
+      await fetch('/api/storage/'+encodeURIComponent(key), {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ value }),
+      });
+      return;
+    }
+    localStorage.setItem(LS_PREFIX+key, value);
+  },
+};
+
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
 
 const SCHOOLS = [
 {
@@ -533,6 +825,25 @@ const PROFILES = {
   }
 };
 
+// ---------- badge definitions ----------
+const BADGES = [
+  {id:'first-ink', icon:'🖋', title:'First Ink', desc:'Write your first 30 words on any essay.'},
+  {id:'first-draft', icon:'📜', title:'First Draft', desc:'Move any essay to "drafting".'},
+  {id:'reviser', icon:'🔁', title:'Reviser', desc:'Move any essay to "revising".'},
+  {id:'finisher', icon:'🏁', title:'Finisher', desc:'Mark your first essay "final".'},
+  {id:'streak-3', icon:'🔥', title:'3-Day Streak', desc:'Write on 3 days in a row.'},
+  {id:'streak-7', icon:'🔥🔥', title:'7-Day Streak', desc:'Write on 7 days in a row.'},
+  {id:'streak-14', icon:'🔥🔥🔥', title:'14-Day Streak', desc:'Write on 14 days in a row.'},
+  {id:'sprinter', icon:'⏱', title:'Sprinter', desc:'Complete 5 writing sprints.'},
+  {id:'marathoner', icon:'⏱⏱', title:'Marathoner', desc:'Complete 25 writing sprints.'},
+  {id:'sharpshooter', icon:'🎯', title:'Sharpshooter', desc:'Score 85+ on an AI feedback pass.'},
+  {id:'most-improved', icon:'📈', title:'Most Improved', desc:"Improve a draft's AI score by 20+ points between passes."},
+  {id:'six-schools', icon:'🗺', title:'Six Schools Touched', desc:'Write at least a few words for every school.'},
+];
+SCHOOLS.forEach(s=>{
+  BADGES.push({id:`dossier-complete-${s.id}`, icon:'🏆', title:`${s.name}: Dossier Complete`, desc:`Mark every core essay for ${s.name} as final.`});
+});
+
 function renderProfiles(){
   const list = document.getElementById('profileList');
   SCHOOLS.forEach(s=>{
@@ -564,6 +875,17 @@ function daysLeft(s){
   return diff;
 }
 function wordCount(text){ const t = text.trim(); return t ? t.split(/\s+/).length : 0; }
+function nextDeadlineForSchool(schoolId){
+  const s = SCHOOLS.find(x=>x.id===schoolId);
+  if(!s) return null;
+  let best=null;
+  s.intakes.forEach(intake=>intake.rounds.forEach(r=>{
+    if(!r.deadline) return;
+    const d = daysLeft(r.deadline);
+    if(d!==null && d>=0 && (best===null || d<best)) best=d;
+  }));
+  return best===null?null:{days:best};
+}
 
 // ---------- header chips + next deadline ----------
 const chipRow = document.getElementById('chipRow');
@@ -630,8 +952,9 @@ allDeadlines.forEach(d=>{
 });
 
 function renderEssayBlock(schoolId, e, isScholarship){
+  const key = `${schoolId}:${e.id}`;
   return `
-    <div class="essay${isScholarship?' essay-schol':''}">
+    <div class="essay${isScholarship?' essay-schol':''}" id="essay-${schoolId}-${e.id}">
       <div class="essay-head">
         <div class="essay-title">${isScholarship?'<span class="schol-badge">SCHOLARSHIP</span> ':''}${e.title}</div>
         <div class="essay-limit">${e.limit}</div>
@@ -641,7 +964,8 @@ function renderEssayBlock(schoolId, e, isScholarship){
         <textarea class="essay-box" data-key="essay:${schoolId}:${e.id}" placeholder="Draft, outline, or rough notes for this essay..."></textarea>
         <div class="essay-footer">
           <span class="wordcount" data-wc="essay:${schoolId}:${e.id}"></span>
-          <span>
+          <span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <button type="button" class="feedback-btn" data-feedback-btn="${key}">Get AI Feedback</button>
             <select class="status-select" data-key="status:${schoolId}:${e.id}">
               <option value="not-started">not started</option>
               <option value="brainstorming">brainstorming</option>
@@ -652,6 +976,7 @@ function renderEssayBlock(schoolId, e, isScholarship){
             <span class="save-indicator" data-save="essay:${schoolId}:${e.id}">saved</span>
           </span>
         </div>
+        <div class="feedback-panel" data-feedback-panel="${key}"></div>
       </div>
     </div>`;
 }
@@ -740,15 +1065,515 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
     document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+    if(btn.dataset.tab==='quest') renderQuestBoard();
+    if(btn.dataset.tab==='badges') renderBadgesTab();
   });
 });
 
-// ---------- storage: load + autosave ----------
+// =====================================================================
+// GAMIFICATION ENGINE
+// =====================================================================
+
+let gameState = { xp:0, streak:0, lastActiveDate:null, badges:[], sprintsCompleted:0, sprintsStarted:0, statusMax:{}, scores:{}, schoolsTouched:[] };
+
+async function loadGameState(){
+  try{
+    const res = await window.storage.get('gamification:state');
+    if(res && res.value){
+      const parsed = JSON.parse(res.value);
+      gameState = Object.assign(gameState, parsed);
+    }
+  }catch(e){ /* first run — defaults stand */ }
+}
+
+let gameSaveTimer = null;
+function saveGameState(){
+  clearTimeout(gameSaveTimer);
+  gameSaveTimer = setTimeout(()=>{
+    window.storage.set('gamification:state', JSON.stringify(gameState)).catch(e=>console.error('gamification save failed', e));
+  }, 300);
+}
+
+const LEVELS = [
+  {level:1,title:'Blank Page',min:0},
+  {level:2,title:'Draft Apprentice',min:100},
+  {level:3,title:'Working Essayist',min:250},
+  {level:4,title:'Story Shaper',min:450},
+  {level:5,title:'Seasoned Narrator',min:700},
+  {level:6,title:'Revision Warrior',min:1000},
+  {level:7,title:'Master Wordsmith',min:1400},
+  {level:8,title:'Application Alchemist',min:1900},
+  {level:9,title:'Admissions Whisperer',min:2500},
+  {level:10,title:'Dossier Legend',min:3200},
+];
+function levelInfo(xp){
+  const LAST = LEVELS[LEVELS.length-1];
+  if(xp < LAST.min){
+    let cur = LEVELS[0], nxt = LEVELS[1];
+    for(let i=0;i<LEVELS.length;i++){
+      if(xp>=LEVELS[i].min){ cur=LEVELS[i]; nxt=LEVELS[i+1]||LAST; }
+    }
+    return { level:cur.level, title:cur.title, xpIntoLevel:xp-cur.min, xpForNext:Math.max(1,nxt.min-cur.min) };
+  }
+  const step = 800;
+  const over = xp - LAST.min;
+  const extra = Math.floor(over/step);
+  const base = LAST.min + extra*step;
+  return { level: LAST.level+extra, title:'Dossier Legend', xpIntoLevel: xp-base, xpForNext: step };
+}
+
+function ensureDailyStreak(){
+  const today = new Date().toISOString().slice(0,10);
+  if(gameState.lastActiveDate === today) return;
+  const y = new Date(); y.setDate(y.getDate()-1);
+  const yesterday = y.toISOString().slice(0,10);
+  gameState.streak = (gameState.lastActiveDate === yesterday) ? gameState.streak+1 : 1;
+  gameState.lastActiveDate = today;
+  addXP(5*Math.min(gameState.streak,10), `Day ${gameState.streak} streak`);
+  [3,7,14].forEach(n=>{ if(gameState.streak>=n) awardBadge('streak-'+n); });
+}
+
+function addXP(amount, reason){
+  const before = levelInfo(gameState.xp).level;
+  gameState.xp += amount;
+  const after = levelInfo(gameState.xp).level;
+  showToast(`+${amount} XP — ${reason}`);
+  renderHeaderGame();
+  saveGameState();
+  if(after>before) showLevelUp(after);
+}
+
+function awardBadge(id){
+  if(gameState.badges.includes(id)) return false;
+  gameState.badges.push(id);
+  const def = BADGES.find(b=>b.id===id);
+  showToast(`Badge unlocked — ${def?def.title:id}`, 'badge');
+  renderBadgesTab();
+  renderHeaderGame();
+  saveGameState();
+  return true;
+}
+
+function renderHeaderGame(){
+  const li = levelInfo(gameState.xp);
+  const elLevel = document.getElementById('gameLevel');
+  const elBarInner = document.getElementById('xpBarInner');
+  const elXpLabel = document.getElementById('xpLabel');
+  const elStreak = document.getElementById('streakChip');
+  const elBadges = document.getElementById('badgesChip');
+  if(elLevel) elLevel.innerHTML = `Lv <span class="lv-num">${li.level}</span> — ${li.title}`;
+  if(elBarInner) elBarInner.style.width = Math.min(100, Math.round((li.xpIntoLevel/li.xpForNext)*100))+'%';
+  if(elXpLabel) elXpLabel.textContent = `${li.xpIntoLevel} / ${li.xpForNext} XP`;
+  if(elStreak) elStreak.textContent = `🔥 ${gameState.streak}-day streak`;
+  if(elBadges) elBadges.textContent = `${gameState.badges.length}/${BADGES.length} badges`;
+}
+
+document.getElementById('badgesChip').addEventListener('click', ()=>{
+  document.querySelector('.tab-btn[data-tab="badges"]').click();
+});
+
+// ---------- toasts + level-up ----------
+function showToast(text, type){
+  const c = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  t.className = 'toast'+(type==='badge'?' badge':'');
+  t.textContent = text;
+  c.appendChild(t);
+  requestAnimationFrame(()=>t.classList.add('show'));
+  setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),300); }, 3200);
+}
+
+function showLevelUp(level){
+  const li = levelInfo(gameState.xp);
+  document.getElementById('levelUpTitle').textContent = `Level ${level}`;
+  document.getElementById('levelUpSub').textContent = li.title;
+  const ov = document.getElementById('levelUpOverlay');
+  ov.classList.add('show');
+  setTimeout(()=>ov.classList.remove('show'), 3800);
+}
+document.getElementById('levelUpOverlay').addEventListener('click', ()=>{
+  document.getElementById('levelUpOverlay').classList.remove('show');
+});
+document.getElementById('levelUpClose').addEventListener('click', (ev)=>{
+  ev.stopPropagation();
+  document.getElementById('levelUpOverlay').classList.remove('show');
+});
+
+// ---------- quest board ----------
+function renderQuestBoard(){
+  const grid = document.getElementById('questGrid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  SCHOOLS.forEach(s=>{
+    s.essays.forEach(e=>{
+      const key = `${s.id}:${e.id}`;
+      const ta = document.querySelector(`[data-key="essay:${s.id}:${e.id}"]`);
+      const sel = document.querySelector(`[data-key="status:${s.id}:${e.id}"]`);
+      const text = ta ? ta.value : '';
+      const wc = wordCount(text);
+      const status = sel ? sel.value : 'not-started';
+      const limitNum = parseInt((e.limit||'').replace(/[^0-9]/g,''),10) || null;
+      const pct = limitNum ? Math.min(100, Math.round((wc/limitNum)*100)) : (wc>0?30:0);
+      const over = !!(limitNum && wc>limitNum);
+      const nd = nextDeadlineForSchool(s.id);
+      const score = gameState.scores[key];
+      const card = document.createElement('div');
+      card.className = 'quest-card';
+      card.dataset.school = s.id;
+      card.dataset.essay = e.id;
+      card.innerHTML = `
+        <div class="quest-top">
+          <div><div class="quest-school">${s.tag}</div><div class="quest-title">${e.title}</div></div>
+          <span class="status-pill ${status}">${status.replace(/-/g,' ')}</span>
+        </div>
+        <div class="quest-wc-bar"><div class="quest-wc-fill${over?' over':''}" style="width:${pct}%"></div></div>
+        <div class="quest-meta-row">
+          <span>${wc}${limitNum?'/'+limitNum:''} words</span>
+          <span>${score!=null?`<span class="quest-score">★ ${score}</span>`:''}</span>
+        </div>
+        ${nd ? `<div class="quest-meta-row" style="margin-top:4px;"><span class="quest-deadline${nd.days<=14?' urgent':''}">${s.name} — ${nd.days}d to next round</span></div>` : ''}
+      `;
+      grid.appendChild(card);
+    });
+  });
+}
+document.getElementById('questGrid').addEventListener('click', ev=>{
+  const card = ev.target.closest('.quest-card');
+  if(!card) return;
+  jumpToEssay(card.dataset.school, card.dataset.essay);
+});
+
+function jumpToEssay(schoolId, essayId){
+  document.querySelector('.tab-btn[data-tab="schools"]').click();
+  const card = document.getElementById('card-'+schoolId);
+  if(card) card.classList.add('open');
+  requestAnimationFrame(()=>{
+    const essayEl = document.getElementById(`essay-${schoolId}-${essayId}`);
+    if(essayEl){
+      essayEl.scrollIntoView({behavior:'smooth', block:'center'});
+      essayEl.classList.add('flash');
+      setTimeout(()=>essayEl.classList.remove('flash'), 1600);
+    }
+  });
+}
+
+// ---------- badges tab ----------
+function renderBadgesTab(){
+  const grid = document.getElementById('badgeGrid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  BADGES.forEach(b=>{
+    const earned = gameState.badges.includes(b.id);
+    const card = document.createElement('div');
+    card.className = 'badge-card'+(earned?'':' locked');
+    card.innerHTML = `<div class="badge-icon">${b.icon}</div><div class="badge-title">${b.title}</div><div class="badge-desc">${b.desc}</div>`;
+    grid.appendChild(card);
+  });
+}
+
+// ---------- essay status milestones ----------
+const STATUS_ORDER = ['not-started','brainstorming','drafting','revising','final'];
+
+function handleStatusChange(schoolId, essayId, newVal){
+  const key = `${schoolId}:${essayId}`;
+  const idx = STATUS_ORDER.indexOf(newVal);
+  const prevMax = gameState.statusMax[key] ?? 0;
+  if(idx > prevMax){
+    gameState.statusMax[key] = idx;
+    ensureDailyStreak();
+    addXP(10*idx, `${schoolId.toUpperCase()} essay reached "${newVal}"`);
+    if(newVal==='drafting') awardBadge('first-draft');
+    if(newVal==='revising') awardBadge('reviser');
+    saveGameState();
+  }
+}
+
+function checkDossierComplete(schoolId){
+  const s = SCHOOLS.find(x=>x.id===schoolId);
+  const nonSchol = s.essays.filter(e=>!e.scholarship);
+  const allFinal = nonSchol.every(e=>{
+    const sel = document.querySelector(`[data-key="status:${schoolId}:${e.id}"]`);
+    return sel && sel.value === 'final';
+  });
+  if(allFinal){
+    if(awardBadge(`dossier-complete-${schoolId}`)) addXP(100, `${s.name} dossier complete`);
+  }
+}
+
+// ---------- boss battle (final submit checklist) ----------
+let bossBattleCtx = null;
+
+function openBossBattle(schoolId, essayId, el){
+  const s = SCHOOLS.find(x=>x.id===schoolId);
+  const e = s.essays.find(x=>x.id===essayId);
+  const ta = document.querySelector(`[data-key="essay:${schoolId}:${essayId}"]`);
+  const text = ta ? ta.value : '';
+  const wc = wordCount(text);
+  const limitNum = parseInt((e.limit||'').replace(/[^0-9]/g,''),10) || null;
+
+  bossBattleCtx = { schoolId, essayId, el };
+
+  document.getElementById('bbTitle').textContent = `${s.name} — ${e.title}`;
+
+  const wcOk = !limitNum || wc<=limitNum;
+  const placeholderPattern = /\betc\.?\b|\btodo\b|\bxxx\b|<[^>]*>/i;
+  const hasPlaceholder = placeholderPattern.test(text);
+  document.getElementById('bbAutoChecks').innerHTML = `
+    <div class="checklist-auto ${wcOk?'ok':'warn'}">${wcOk?'✅':'⚠️'} Word count: ${wc}${limitNum?'/'+limitNum:''}${wcOk?' — within limit':' — over limit, consider trimming'}</div>
+    <div class="checklist-auto ${hasPlaceholder?'warn':'ok'}">${hasPlaceholder?'⚠️ Looks like leftover placeholder text (e.g. "etc", a TODO) — double check':'✅ No leftover placeholder text detected'}</div>
+  `;
+
+  const manualEl = document.getElementById('bbManualChecks');
+  manualEl.innerHTML = `
+    <label class="checklist-item"><input type="checkbox" data-bb-check> I've read this essay aloud at least once</label>
+    <label class="checklist-item"><input type="checkbox" data-bb-check> I've checked spelling and grammar</label>
+  `;
+  const confirmBtn = document.getElementById('bbConfirm');
+  confirmBtn.disabled = true;
+  manualEl.querySelectorAll('[data-bb-check]').forEach(cb=>{
+    cb.addEventListener('change', ()=>{
+      const all = [...manualEl.querySelectorAll('[data-bb-check]')].every(x=>x.checked);
+      confirmBtn.disabled = !all;
+    });
+  });
+
+  document.getElementById('bossBattleOverlay').classList.add('show');
+}
+
+document.getElementById('bbCancel').addEventListener('click', ()=>{
+  document.getElementById('bossBattleOverlay').classList.remove('show');
+  bossBattleCtx = null;
+});
+
+document.getElementById('bbConfirm').addEventListener('click', async ()=>{
+  if(!bossBattleCtx) return;
+  const { schoolId, essayId, el } = bossBattleCtx;
+  el.value = 'final';
+  el.dataset.prev = 'final';
+  await window.storage.set(`status:${schoolId}:${essayId}`, 'final');
+  const ind = document.querySelector(`[data-save="essay:${schoolId}:${essayId}"]`);
+  if(ind){ ind.classList.add('show'); setTimeout(()=>ind.classList.remove('show'),1400); }
+
+  handleStatusChange(schoolId, essayId, 'final');
+  ensureDailyStreak();
+  addXP(50, 'Essay finalized');
+  awardBadge('finisher');
+  checkDossierComplete(schoolId);
+
+  document.getElementById('bossBattleOverlay').classList.remove('show');
+  showToast('Essay marked final — nicely done.');
+  bossBattleCtx = null;
+  renderQuestBoard();
+});
+
+// ---------- sprint mode ----------
+let sprintState = null;
+
+function populateSprintPicker(){
+  const sel = document.getElementById('sprintEssaySelect');
+  sel.innerHTML = '';
+  SCHOOLS.forEach(s=>{
+    const grp = document.createElement('optgroup');
+    grp.label = s.name;
+    s.essays.forEach(e=>{
+      const opt = document.createElement('option');
+      opt.value = `${s.id}:${e.id}`;
+      opt.textContent = e.title;
+      grp.appendChild(opt);
+    });
+    sel.appendChild(grp);
+  });
+}
+
+document.getElementById('sprintBtn').addEventListener('click', ()=>{
+  populateSprintPicker();
+  document.getElementById('sprintPickerOverlay').classList.add('show');
+});
+document.getElementById('sprintCancel').addEventListener('click', ()=>{
+  document.getElementById('sprintPickerOverlay').classList.remove('show');
+});
+document.querySelectorAll('.dur-btn').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    document.querySelectorAll('.dur-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+  });
+});
+document.getElementById('sprintStart').addEventListener('click', ()=>{
+  const [schoolId, essayId] = document.getElementById('sprintEssaySelect').value.split(':');
+  const mins = parseInt(document.querySelector('.dur-btn.active').dataset.min, 10);
+  document.getElementById('sprintPickerOverlay').classList.remove('show');
+  startSprint(schoolId, essayId, mins);
+});
+document.getElementById('sprintStop').addEventListener('click', ()=>stopSprint(true));
+
+function startSprint(schoolId, essayId, minutes){
+  if(sprintState) stopSprint(false);
+  const s = SCHOOLS.find(x=>x.id===schoolId);
+  const e = s.essays.find(x=>x.id===essayId);
+  const ta = document.querySelector(`[data-key="essay:${schoolId}:${essayId}"]`);
+  sprintState = {
+    schoolId, essayId,
+    totalSec: minutes*60,
+    remainingSec: minutes*60,
+    startWc: wordCount(ta ? ta.value : ''),
+    timerId: null,
+  };
+  document.getElementById('sprintEssayLabel').textContent = `${s.tag} — ${e.title}`;
+  document.getElementById('sprintHud').classList.add('show');
+  updateSprintDisplay();
+
+  gameState.sprintsStarted++;
+  saveGameState();
+  ensureDailyStreak();
+  addXP(5, 'Sprint started');
+
+  jumpToEssay(schoolId, essayId);
+
+  sprintState.timerId = setInterval(()=>{
+    if(!sprintState) return;
+    sprintState.remainingSec--;
+    updateSprintDisplay();
+    if(sprintState.remainingSec<=0) completeSprint();
+  }, 1000);
+}
+
+function updateSprintDisplay(){
+  if(!sprintState) return;
+  const m = Math.floor(sprintState.remainingSec/60);
+  const sec = sprintState.remainingSec%60;
+  document.getElementById('sprintTime').textContent = `${m}:${String(sec).padStart(2,'0')}`;
+  const frac = Math.max(0, sprintState.remainingSec/sprintState.totalSec);
+  const circumference = 125.6;
+  document.getElementById('sprintRingFg').style.strokeDashoffset = String(circumference*(1-frac));
+}
+
+function completeSprint(){
+  if(!sprintState) return;
+  clearInterval(sprintState.timerId);
+  const ta = document.querySelector(`[data-key="essay:${sprintState.schoolId}:${sprintState.essayId}"]`);
+  const endWc = wordCount(ta ? ta.value : '');
+  const delta = Math.max(0, endWc - sprintState.startWc);
+  gameState.sprintsCompleted++;
+  playChime();
+  ensureDailyStreak();
+  addXP(15 + Math.min(20, Math.floor(delta/5)), `Sprint complete (+${delta} words)`);
+  if(gameState.sprintsCompleted>=5) awardBadge('sprinter');
+  if(gameState.sprintsCompleted>=25) awardBadge('marathoner');
+  saveGameState();
+  document.getElementById('sprintHud').classList.remove('show');
+  sprintState = null;
+}
+
+function stopSprint(early){
+  if(!sprintState) return;
+  clearInterval(sprintState.timerId);
+  document.getElementById('sprintHud').classList.remove('show');
+  if(early) showToast('Sprint ended early — no XP this time, but the words are still yours.');
+  sprintState = null;
+}
+
+function playChime(){
+  try{
+    const ctx = new (window.AudioContext||window.webkitAudioContext)();
+    const tone = (freq,start,dur)=>{
+      const o=ctx.createOscillator(), g=ctx.createGain();
+      o.frequency.value=freq; o.type='sine';
+      o.connect(g); g.connect(ctx.destination);
+      g.gain.setValueAtTime(0.0001, ctx.currentTime+start);
+      g.gain.exponentialRampToValueAtTime(0.2, ctx.currentTime+start+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime+start+dur);
+      o.start(ctx.currentTime+start); o.stop(ctx.currentTime+start+dur+0.05);
+    };
+    tone(523.25,0,0.15); tone(659.25,0.15,0.15); tone(783.99,0.3,0.3);
+  }catch(e){ /* Web Audio unavailable — skip the chime silently */ }
+}
+
+// ---------- AI feedback ----------
+async function requestFeedback(btn){
+  const key = btn.dataset.feedbackBtn;
+  const [schoolId, essayId] = key.split(':');
+  const s = SCHOOLS.find(x=>x.id===schoolId);
+  const e = s.essays.find(x=>x.id===essayId);
+  const ta = document.querySelector(`[data-key="essay:${schoolId}:${essayId}"]`);
+  const panel = document.querySelector(`[data-feedback-panel="${key}"]`);
+  const text = ta ? ta.value : '';
+
+  if(!SERVER_AVAILABLE){
+    panel.classList.add('show');
+    panel.innerHTML = `<div class="fb-error">AI feedback needs the app running locally (clone the repo, run "npm start"). This hosted copy has no server to proxy the request.</div>`;
+    return;
+  }
+
+  btn.disabled = true;
+  const origLabel = btn.textContent;
+  btn.textContent = 'Scoring...';
+  panel.classList.add('show');
+  panel.innerHTML = `<div class="fb-note">Reading your draft...</div>`;
+
+  try{
+    const r = await fetch('/api/feedback', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ schoolName:s.name, essayTitle:e.title, prompt:e.prompt, limit:e.limit, draftText:text }),
+    });
+    const data = await r.json();
+    if(!r.ok){
+      panel.innerHTML = `<div class="fb-error">${escapeHtml(data.message || 'Feedback failed.')}</div>`;
+      return;
+    }
+    renderFeedback(panel, data);
+    ensureDailyStreak();
+    const prevScore = gameState.scores[key];
+    gameState.scores[key] = data.overall;
+    saveGameState();
+    if(prevScore!=null && data.overall>prevScore){
+      addXP(Math.min(40, (data.overall-prevScore)*2), `Draft improved ${prevScore} → ${data.overall}`);
+      if(data.overall-prevScore>=20) awardBadge('most-improved');
+    }
+    if(data.overall>=85) awardBadge('sharpshooter');
+    renderQuestBoard();
+  }catch(err){
+    panel.innerHTML = `<div class="fb-error">Could not reach the feedback service — is the server running?</div>`;
+  }finally{
+    btn.disabled = false;
+    btn.textContent = origLabel;
+  }
+}
+
+function renderFeedback(panel, data){
+  const labels = {clarity:'Clarity', structure:'Structure', specificity:'Specificity', soWhat:'"So what"', wordLimitFit:'Length fit'};
+  let rows = '';
+  Object.keys(labels).forEach(k=>{
+    const v = (data.scores && data.scores[k]) || 0;
+    rows += `
+      <div class="fb-score-row">
+        <span class="fb-score-label">${labels[k]}</span>
+        <span class="fb-score-bar"><span class="fb-score-fill" style="width:${v}%"></span></span>
+        <span class="fb-score-val">${v}</span>
+      </div>`;
+  });
+  const suggestions = (data.suggestions||[]).map(s=>`<li>${escapeHtml(s)}</li>`).join('');
+  panel.innerHTML = `
+    <div class="fb-overall">Overall: ${data.overall} / 100</div>
+    ${rows}
+    <ul class="fb-suggestions">${suggestions}</ul>
+    <div class="fb-note">${escapeHtml(data.note || '')}</div>
+  `;
+}
+
+document.addEventListener('click', ev=>{
+  const fbBtn = ev.target.closest('[data-feedback-btn]');
+  if(fbBtn) requestFeedback(fbBtn);
+});
+
+// =====================================================================
+// storage: load + autosave (essays, scratch, status)
+// =====================================================================
 async function loadAll(){
   const textareas = document.querySelectorAll('textarea[data-key]');
   for(const ta of textareas){
     try{
-      const res = await window.storage.get(ta.dataset.key, false);
+      const res = await window.storage.get(ta.dataset.key);
       if(res && res.value) ta.value = res.value;
     }catch(e){ /* key not found yet, ignore */ }
     updateWordCount(ta);
@@ -756,14 +1581,15 @@ async function loadAll(){
   const selects = document.querySelectorAll('select[data-key]');
   for(const sel of selects){
     try{
-      const res = await window.storage.get(sel.dataset.key, false);
+      const res = await window.storage.get(sel.dataset.key);
       if(res && res.value) sel.value = res.value;
     }catch(e){ /* ignore */ }
+    sel.dataset.prev = sel.value;
   }
   // general scratch
   const gen = document.getElementById('generalScratch');
   try{
-    const res = await window.storage.get('scratch:general', false);
+    const res = await window.storage.get('scratch:general');
     if(res && res.value) gen.value = res.value;
   }catch(e){}
   updateWordCount(gen, 'wc-general');
@@ -774,7 +1600,6 @@ function updateWordCount(el, explicitId){
   const target = explicitId ? document.getElementById(explicitId) : document.querySelector(`[data-wc="${el.dataset.key}"]`);
   if(!target) return;
   target.textContent = wc + ' words';
-  const limitAttr = el.closest('.essay-editor-wrap');
   target.classList.remove('over');
 }
 
@@ -783,11 +1608,38 @@ function debounceSave(key, value, indicatorSelector){
   clearTimeout(saveTimers[key]);
   saveTimers[key] = setTimeout(async ()=>{
     try{
-      await window.storage.set(key, value, false);
+      await window.storage.set(key, value);
       const ind = document.querySelector(indicatorSelector);
       if(ind){ ind.classList.add('show'); setTimeout(()=>ind.classList.remove('show'), 1400); }
     }catch(e){ console.error('save failed', e); }
   }, 600);
+}
+
+let qbTimer = null;
+function scheduleQuestBoardRefresh(){
+  clearTimeout(qbTimer);
+  qbTimer = setTimeout(renderQuestBoard, 300);
+}
+
+function handleEssayInput(el){
+  const parts = el.dataset.key.split(':'); // ['essay', schoolId, essayId]
+  const schoolId = parts[1];
+  const wc = wordCount(el.value);
+  if(wc>0){
+    ensureDailyStreak();
+    if(!gameState.schoolsTouched.includes(schoolId)){
+      gameState.schoolsTouched.push(schoolId);
+      saveGameState();
+      if(gameState.schoolsTouched.length>=6){
+        awardBadge('six-schools');
+        addXP(30, 'Every school touched');
+      }
+    }
+  }
+  if(wc>=30 && !gameState.badges.includes('first-ink')){
+    awardBadge('first-ink');
+    addXP(20, 'First words down');
+  }
 }
 
 document.addEventListener('input', (ev)=>{
@@ -795,21 +1647,49 @@ document.addEventListener('input', (ev)=>{
   if(el.tagName === 'TEXTAREA' && el.dataset.key){
     updateWordCount(el);
     debounceSave(el.dataset.key, el.value, `[data-save="${el.dataset.key}"]`);
+    if(el.dataset.key.startsWith('essay:')){
+      handleEssayInput(el);
+      scheduleQuestBoardRefresh();
+    }
   }
   if(el.id === 'generalScratch'){
     updateWordCount(el, 'wc-general');
     debounceSave('scratch:general', el.value, '#save-general');
   }
 });
+
 document.addEventListener('change', (ev)=>{
   const el = ev.target;
-  if(el.tagName === 'SELECT' && el.dataset.key){
-    debounceSave(el.dataset.key, el.value, `[data-save="${el.dataset.key}"]`); // reuse essay save indicator area loosely
+  if(el.tagName !== 'SELECT' || !el.dataset.key || !el.dataset.key.startsWith('status:')) return;
+  const parts = el.dataset.key.split(':'); // status, schoolId, essayId
+  const schoolId = parts[1], essayId = parts[2];
+  const newVal = el.value;
+  const prevVal = el.dataset.prev || 'not-started';
+
+  if(newVal === 'final'){
+    el.value = prevVal;
+    openBossBattle(schoolId, essayId, el);
+    return;
   }
+  el.dataset.prev = newVal;
+  debounceSave(el.dataset.key, newVal, `[data-save="essay:${schoolId}:${essayId}"]`);
+  handleStatusChange(schoolId, essayId, newVal);
+  scheduleQuestBoardRefresh();
 });
 
-renderProfiles();
-loadAll();
+(async function init(){
+  renderProfiles();
+  await detectServer();
+  if(!SERVER_AVAILABLE){
+    const notice = document.getElementById('hostingNotice');
+    if(notice) notice.style.display = 'block';
+  }
+  await loadGameState();
+  await loadAll();
+  renderHeaderGame();
+  renderBadgesTab();
+  renderQuestBoard();
+})();
 </script>
 </body>
 </html>
